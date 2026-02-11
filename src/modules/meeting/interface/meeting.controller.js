@@ -6,7 +6,10 @@ const createMeeting = async (req, res, next) => {
   try {
     validateMeetingPayload(req.body);
     const meeting = await meetingService.createMeeting(req.body);
-    return res.status(201).json(meeting);
+    return res.status(201).json({
+      message: "Meeting created successfully",
+      data: meeting,
+    });
   } catch (error) {
     return next(error);
   }
@@ -35,7 +38,10 @@ const listMeetings = async (req, res, next) => {
     }
 
     const meetings = await meetingService.listMeetings(filters);
-    return res.status(200).json(meetings);
+    return res.status(200).json({
+      message: "Meetings fetched successfully",
+      data: meetings,
+    });
   } catch (error) {
     return next(error);
   }
@@ -44,7 +50,10 @@ const listMeetings = async (req, res, next) => {
 const getMeetingById = async (req, res, next) => {
   try {
     const meeting = await meetingService.getMeetingById(req.params.id);
-    return res.status(200).json(meeting);
+    return res.status(200).json({
+      message: "Meeting fetched successfully",
+      data: meeting,
+    });
   } catch (error) {
     return next(error);
   }
@@ -54,7 +63,10 @@ const updateMeeting = async (req, res, next) => {
   try {
     const meeting = await meetingService.updateMeeting(req.params.id, req.body);
 
-    return res.status(200).json(meeting);
+    return res.status(200).json({
+      message: "Meeting updated successfully",
+      data: meeting,
+    });
   } catch (error) {
     return next(error);
   }
@@ -63,7 +75,9 @@ const updateMeeting = async (req, res, next) => {
 const deleteMeeting = async (req, res, next) => {
   try {
     await meetingService.deleteMeeting(req.params.id);
-    return res.status(204).send();
+    return res.status(200).json({
+      message: "Meeting deleted successfully",
+    });
   } catch (error) {
     return next(error);
   }
